@@ -1,0 +1,67 @@
+// Copyright (c) Open Enclave SDK contributors.
+// Licensed under the MIT License.
+
+// © 2024 Nokia
+// Licensed under the BSD 3-Clause Clear License
+// SPDX-License-Identifier: BSD-3-Clause-Clear
+
+enclave {
+    // Include system EDL files here
+    //from "openenclave/edl/attestation.edl" import *;
+    from "openenclave/edl/syscall.edl" import *;
+    from "platform.edl" import *;
+
+    struct pem_key_t
+    {
+        [size=size] uint8_t* buffer;
+        size_t size;
+    };
+
+    struct remote_report_t
+    {
+        [size=size] uint8_t* buffer;
+        size_t size;
+    };
+
+    struct message_t
+    {
+        [size=size] uint8_t* data;
+        size_t size;
+    };
+
+    struct enclave_output_t
+    {
+        [size=32] uint8_t* hash_input_data;
+        [size=32] uint8_t* hash_output_data;
+        [size=256] uint8_t* signature;
+        [size=size_output_data] uint8_t* output_data;
+        size_t size_output_data;
+    };
+
+    trusted {
+        // Return the public key of this enclave along with the enclave's remote report.
+        // Another enclave can use the remote report to attest the enclave and verify
+        // the integrity of the public key.
+        public int get_remote_report_with_pubkey([out] uint8_t **pem_key, 
+                                                 [out] size_t *key_size,
+                                                 [out] uint8_t **remote_report,
+                                                 [out] size_t  *remote_report_size);
+
+        //public int encrypt_secret_key_for_testing(
+        //    [out] message_t* encrypted_secret_key);
+
+        public int decrypt_and_set_secret_key(
+            [in] message_t* encrypted_secret_key);
+
+        public int decrypt_dataset_and_set_data(
+            [in] message_t* encrypted_dataset);
+
+        public int do_computation();
+
+        public int get_signed_output(
+            [out] enclave_output_t* signed_output);
+
+    };
+};
+
+
