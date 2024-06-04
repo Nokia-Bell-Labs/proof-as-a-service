@@ -1,0 +1,88 @@
+# © 2024 Nokia
+# Licensed under the BSD 3-Clause Clear License
+# SPDX-License-Identifier: BSD-3-Clause-Clear
+
+# Python3 manifest template
+
+loader.entrypoint = "file:{{ gramine.libos }}"
+libos.entrypoint = "{{ entrypoint }}"
+
+loader.log_level = "{{ log_level }}"
+
+loader.env.LD_LIBRARY_PATH = "/lib:/lib:{{ arch_libdir }}:/usr/{{ arch_libdir }}"
+
+# Add pip package directory and and user modules directory to PYTHONPATH
+# so that the enclave can import the modules.
+# (note: namespace objects supported since ninja v2.10 for
+#        accessing variables outside of block in which they are set.)
+{% set ns = namespace(pythonpath = '') %}
+{% for relpath in python_relpaths %}
+  {% set path = '/userdir/' + relpath %}
+  {% if loop.index > 1 %}
+    {% set ns.pythonpath = ns.pythonpath + ':' %}
+  {% endif %}
+  {% set ns.pythonpath = ns.pythonpath + path %}
+{% endfor %}
+loader.env.PYTHONPATH = "{{ ns.pythonpath }}"
+
+# Python's NumPy spawns as many threads as there are CPU cores, and each thread
+# consumes a chunk of memory, so on large machines 1G enclave size may be not enough.
+# We limit the number of spawned threads via OMP_NUM_THREADS env variable.
+loader.env.OMP_NUM_THREADS = "8"
+
+# For python, entrypoint is the path to the python command and
+# entrypoint_args are the python script and other potential arguments for the script
+loader.argv = [
+  "{{ entrypoint }}",
+{% for arg in loader_args %}
+  "{{ arg }}",
+{% endfor %}
+]
+
+sys.enable_sigterm_injection = true
+sys.disallow_subprocesses = false
+
+fs.mounts = [
+  { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
+  { path = "{{ arch_libdir }}", uri = "file:{{ arch_libdir }}" },
+  { path = "/usr/{{ arch_libdir }}", uri = "file:/usr/{{ arch_libdir }}" },
+{% for path in python.get_sys_path(entrypoint) %}
+  { path = "{{ path }}", uri = "file:{{ path }}" },
+{% endfor %}
+# Mount the directory with the pip installed user_packages
+# and the user uploaded package
+{% for path in python_relpaths %}
+  { path = "/userdir/{{ path }}", uri = "file:{{ work_dir }}/{{ path }}" },
+{% endfor %}
+  { path = "{{ entrypoint }}", uri = "file:{{ entrypoint }}" },
+  { path = "/appdir", uri = "file:{{ app_dir }}" },
+  { type = "tmpfs", path = "/tmp" },
+]
+
+fs.start_dir = "/appdir"
+
+sys.stack.size = "4M"
+sys.enable_extra_runtime_domain_names_conf = true
+
+sgx.debug = true
+sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
+sgx.enclave_size = "4G"
+sgx.max_threads = 16
+
+sgx.remote_attestation = "{{ ra_type }}"
+sgx.ra_client_spid = "{{ ra_client_spid }}"
+sgx.ra_client_linkable = {{ 'true' if ra_client_linkable == '1' else 'false' }}
+
+sgx.trusted_files = [
+  "file:{{ gramine.libos }}",
+  "file:{{ entrypoint }}",
+  "file:{{ gramine.runtimedir() }}/",
+  "file:{{ arch_libdir }}/",
+  "file:/usr/{{ arch_libdir }}/",
+{% for path in python.get_sys_path(entrypoint) %}
+  "file:{{ path }}{{ '/' if path.is_dir() else '' }}",
+{% endfor %}
+{% for path in python_relpaths %}
+  "file:{{ work_dir }}/{{ path }}",
+{% endfor %}
+]

@@ -1,0 +1,9 @@
+# © 2024 Nokia
+# Licensed under the BSD 3-Clause Clear License
+# SPDX-License-Identifier: BSD-3-Clause-Clear
+
+cryptography==42.0.7
+https://download.pytorch.org/whl/cpu/torch-2.3.0%2Bcpu-cp310-cp310-linux_x86_64.whl
+https://download.pytorch.org/whl/cpu/torchvision-0.18.0%2Bcpu-cp310-cp310-linux_x86_64.whl
+#https://download.pytorch.org/whl/cpu/torch-2.3.0%2Bcpu-cp38-cp38-linux_x86_64.whl
+#https://download.pytorch.org/whl/cpu/torchvision-0.18.0%2Bcpu-cp38-cp38-linux_x86_64.whl
