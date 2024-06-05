@@ -16,6 +16,8 @@ chmod +x install_vm_dependencies.sh
 
 The SGX platform software is not needed, because the above VM comes with it installed.
 
+Note the above script adds the user `praas` to docker group. If you have a different username, please modify the script to match it.
+
 4. edit .bashrc to add the environment variables to be enabled at login
 
 ```
