@@ -64,7 +64,6 @@ The SGX platform is not needed, because the above VM comes with SGX platform sof
 	```bash
 	python3 check_proof.py proofs/proof_data_spamnet_data_0.tar.gz.json
 	python3 check_proof.py proofs/proof_data_mnist_data_0.tar.gz.json
-	python3 check_proof.py
-	proofs/proof_data_fashionmnist_data_0.tar.gz.json
+	python3 check_proof.py proofs/proof_data_fashionmnist_data_0.tar.gz.json
 	python3 check_proof.py proofs/proof_data_cifar10_data_0.tar.gz.json
 	```
