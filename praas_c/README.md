@@ -4,12 +4,12 @@
 
 1. Create an SGX-capable VM in Azure: Ubuntu 20.04 LTS, dc2s_v3
 
-Note that you require an Azure account to provision the resources.
-One can use either the Azure web portal, or the Azure client from the command line.
+    Note that you require an Azure account to provision the resources.
+    One can use either the Azure web portal, or the Azure client from the command line.
 
-Note that to perform any actions, you need to be logged in. On the web portal, follow the instructions there. With Azure client, you need to perform `az login` and follow the instructions accordingly.
+    Note that to perform any actions, you need to be logged in. On the web portal, follow the instructions there. With Azure client, you need to perform `az login` and follow the instructions accordingly.
 
-Make sure you obtain store the necessary login information for the VM (e.g., ssh keys).
+    Make sure you obtain store the necessary login information for the VM (e.g., ssh keys).
 
 2. ssh into the VM
 

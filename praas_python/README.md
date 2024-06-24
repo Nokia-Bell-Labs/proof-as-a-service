@@ -3,19 +3,19 @@
 ## Setup
 
 1. Create an SGX-capable VM in Azure: Ubuntu 22.04 LTS, dc2s_v3.
-Note that you require an Azure account to provision the resources.
-One can use either the Azure web portal, or the Azure client from the command line.
+	Note that you require an Azure account to provision the resources.
+	One can use either the Azure web portal, or the Azure client from the command line.
 
-Note that to perform any actions, you need to be logged in. On the web portal, follow the instructions there. With Azure client, you need to perform `az login` and follow the instructions accordingly.
+	Note that to perform any actions, you need to be logged in. On the web portal, follow the instructions there. With Azure client, you need to perform `az login` and follow the instructions accordingly.
 
-Make sure you obtain store the necessary login information for the VM (e.g., ssh keys).
+	Make sure you obtain store the necessary login information for the VM (e.g., ssh keys).
 
-	***NOTE:*** The praas_server python runs also on Ubuntu 20.04. 
-The default python in Ubuntu 20.04 is 3.8 compared with 3.10 in Ubuntu 22.04.
-Bigger datasets may fail with an out-of-memory error in python3.8.
-The proof for spamnet can be also generated in Ubuntu 20.04
-(or if the other datasets are split into multiple pieces, they can also work).
-Proofs for bigger datasets can be generated in Ubuntu 22.04 (cifar10, mnist, fashionmnist).
+	IMPORTANT NOTE: The praas_server python runs also on Ubuntu 20.04. 
+	The default python in Ubuntu 20.04 is 3.8 compared with 3.10 in Ubuntu 22.04.
+	Bigger datasets may fail with an out-of-memory error in python3.8.
+	The proof for spamnet can be also generated in Ubuntu 20.04
+	(or if the other datasets are split into multiple pieces, they can also work).
+	Proofs for bigger datasets can be generated in Ubuntu 22.04 (cifar10, mnist, fashionmnist).
 
 	If Ubuntu 20.04 is used, the requirements of the property computation functions
 (e.g., `praas_py_client/property_computation_functions/mnist/requirements.txt`)
