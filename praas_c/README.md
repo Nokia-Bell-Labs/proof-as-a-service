@@ -24,9 +24,27 @@ Note the above script adds the user `praas` to docker group. If you have a diffe
 . /opt/openenclave/share/openenclave/openenclaverc
 ```
 
+5. Install the necessary python packages for running the client.
+
+```
+cd praas_c_client/
+sudo python3 -m pip install -r requirements.txt
+cd ..
+```
+
 ## Running
 
-1. Create the datasets to be tested by following the instructions in [praas_c_client/inputs/README.md](/praas_c/praas_c_client/inputs/README.md).
+1. Create the datasets to be tested (detailed explanations in [praas_c_client/inputs/README.md](/praas_c/praas_c_client/inputs/README.md)).
+
+This may take a while. However, it only needs to be done once.
+
+```
+cd praas_c_client/inputs
+./gen_hash_data.sh
+./gen_integer_data.sh
+cd ../..
+```
+
 
 2. Then compile the enclaves and the server via:
 

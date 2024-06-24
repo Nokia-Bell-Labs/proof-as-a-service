@@ -27,6 +27,22 @@ need to be adjusted to use python3.8 for torch (rather than 3.10).
 
 The SGX platform is not needed, because the above VM comes with SGX platform software installed.
 
+4. Install the necessary python packages for running the client.
+
+```
+cd praas_py_client/
+sudo python3 -m pip install -r requirements.txt
+cd ..
+```
+
+5. Install the necessary python packages for running the server.
+
+```
+cd praas_py_server/
+sudo python3 -m pip install -r requirements.txt
+cd ..
+```
+
 ## Running
 
 1. Create the datasets:

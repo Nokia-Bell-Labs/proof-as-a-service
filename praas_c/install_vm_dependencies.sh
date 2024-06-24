@@ -40,7 +40,7 @@ sudo dmesg | grep -i sgx
 
 
 # 3. install openenclave, gramine and docker
-sudo apt install -y make clang-10 pkg-config uuid-dev libssl-dev gdb libsgx-enclave-common libsgx-quote-ex libprotobuf17 libsgx-dcap-ql libsgx-dcap-ql-dev az-dcap-client open-enclave
+sudo apt install -y make clang-10 pkg-config g++ uuid-dev libssl-dev gdb libsgx-enclave-common libsgx-quote-ex libprotobuf17 libsgx-dcap-ql libsgx-dcap-ql-dev az-dcap-client open-enclave
 sudo apt install -y gramine
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
 #sudo apt install -y libssl1.1
@@ -48,9 +48,5 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
 # 4. install python packages
 sudo apt install -y python3-pip
 sudo pip3 install cmake azure-security-attestation azure-identity flask python-dotenv cryptography requests cffi
-
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
-sudo apt install -y net-tools
 
 sudo usermod -aG docker praas
